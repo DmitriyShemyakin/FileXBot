@@ -30,16 +30,12 @@
 ## Архитектура системы
 ```mermaid
 graph TD
-    A[Пользователь Telegram] --> B[dispatcher]
-    B --> C[RabbitMQ]
-    C --> D[node]
-    D --> E[rest-service]
-    D --> F[mails-service]
-    E --> G[Подтверждение регистрации]
-    F --> H[Email рассылка]
+    A[Пользователь] -->|Файл| B[dispatcher]
+    B -->|Событие через RabbitMQ| C[node]
+    C --> D[(PostgreSQL)]
+    C --> E[Файловое хранилище]
+    D -->|Данные для email| F[mails-service]
+    D -->|Данные для верификации| G[rest-service]
     
-    style B fill:#4CAF50,stroke:#388E3C
-    style C fill:#FF8307,stroke:#FFA000
-    style D fill:#2196F3,stroke:#1976D2
-    style E fill:#9C27B0,stroke:#7B1FA2
-    style F fill:#FF5722,stroke:#E64A19
+    style C fill:#2196F3,stroke:#1976D2
+    style D fill:#009688,stroke:#00796B
