@@ -26,8 +26,6 @@
 - **Базы данных**: PostgreSQL
 - **API**: REST, Telegram Bot API
 - **Рассылка email**: JavaMailSender с SMTP
-- **Тестирование**: JUnit, JMeter
-- **Развёртывание**: Docker, Ubuntu VPS
 
 ## Архитектура системы
 ```mermaid
