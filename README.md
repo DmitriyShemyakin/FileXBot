@@ -4,55 +4,46 @@
 
 Проект представляет собой распределенную систему Telegram-бота с микросервисной архитектурой на Java Spring, использующую RabbitMQ для асинхронной обработки сообщений.
 
-## Модули проекта
+## 🧩 Модули проекта
 
-### Основные микросервисы
+### 📦 Основные микросервисы
 | Модуль                          | Технологии                     | Назначение                                                                 |
 |---------------------------------|--------------------------------|----------------------------------------------------------------------------|
-| **[filex-bot-dispatcher](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-dispatcher)** | Spring Boot, Telegram API      | Приём сообщений, первичная валидация, взаимодействие с RabbitMQ            |
-| **[filex-bot-file-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-file-service)** | Spring Boot           | Управление файловыми операциями (загрузка, хранение, обработка)           |
-| **[filex-bot-user-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-user-service)** | Spring Boot, Spring Data JPA   | Управление пользователями и аутентификацией                               |
-| **[filex-bot-registration-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-registration-service)** | Spring Boot, REST              | Обработка регистрации, подтверждение через email                          |
-| **[filex-bot-email-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-email-service)** | Spring Boot, JavaMailSender    | Асинхронная отправка email-уведомлений                                    |
+| **[dispatcher](https://github.com/DmitriyShemyakin/FileXBot/tree/master/dispatcher)** | Spring Boot, Telegram API      | Приём сообщений, первичная валидация, взаимодействие с RabbitMQ            |
+| **[node](https://github.com/DmitriyShemyakin/FileXBot/tree/master/node)** | Spring Boot, Spring Data       | Обработка бизнес-логики, работа с файлами и пользователями                |
+| **[rest-service](https://github.com/DmitriyShemyakin/FileXBot/tree/master/rest-service)** | Spring Boot, REST API          | Обработка HTTP-запросов, подтверждение регистрации                        |
+| **[mails-service](https://github.com/DmitriyShemyakin/FileXBot/tree/master/mails-service)** | Spring Boot, JavaMailSender    | Асинхронная отправка email-уведомлений                                    |
 
-### Вспомогательные модули
+### 📚 Общие библиотеки
 | Модуль                          | Назначение                                                                 |
 |---------------------------------|----------------------------------------------------------------------------|
-| **[filex-bot-commons](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-commons)** | Общие DTO, утилиты и конфигурации для всех микросервисов                   |
-| **[filex-bot-config-server](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-config-server)** | Centralized configuration management для всех сервисов                     |
+| **[common-jpa](https://github.com/DmitriyShemyakin/FileXBot/tree/master/common-jpa)** | Общие сущности и репозитории JPA для всех сервисов                        |
+| **[common-utils](https://github.com/DmitriyShemyakin/FileXBot/tree/master/common-utils)** | Утилитарные классы и вспомогательные функции                             |
+| **[comon-rabbitmq](https://github.com/DmitriyShemyakin/FileXBot/tree/master/comon-rabbitmq)** | Конфигурация RabbitMQ, DTO для обмена сообщениями                         |
 
-## Технологический стек
+## ⚙️ Технологический стек
 - **Язык**: Java 17
-- **Фреймворки**: Spring Boot 3.x, Spring AMQP, Spring Data
+- **Фреймворки**: Spring Boot 3.x, Spring AMQP, Spring Data JPA
 - **Брокер сообщений**: RabbitMQ
 - **Базы данных**: PostgreSQL
 - **API**: REST, Telegram Bot API
-
-## Особенности реализации
-- Горизонтальное масштабирование: Каждый микросервис может масштабироваться независимо
-- Асинхронная обработка: RabbitMQ гарантирует доставку сообщений при высокой нагрузке
-- Подтверждение регистрации: REST API для верификации email через ссылку
-
-## Запуск проекта
-_git clone https://github.com/DmitriyShemyakin/FileXBot.git
-cd FileXBot_
+- **Рассылка email**: JavaMailSender с SMTP
+- **Тестирование**: JUnit, JMeter
+- **Развёртывание**: Docker, Ubuntu VPS
 
 ## 📡 Архитектура системы
 ```mermaid
 graph TD
-    A[Пользователь Telegram] --> B[filex-bot-dispatcher]
+    A[Пользователь Telegram] --> B[dispatcher]
     B --> C[RabbitMQ]
-    C --> D[filex-bot-file-service]
-    C --> E[filex-bot-user-service]
-    C --> F[filex-bot-registration-service]
-    F --> G[filex-bot-email-service]
-    D --> H[(PostgreSQL)]
-    E --> I[(PostgreSQL)]
-    G --> J[SMTP Server]
+    C --> D[node]
+    D --> E[rest-service]
+    D --> F[mails-service]
+    E --> G[Подтверждение регистрации]
+    F --> H[Email рассылка]
     
     style B fill:#4CAF50,stroke:#388E3C
     style C fill:#FFC107,stroke:#FFA000
     style D fill:#2196F3,stroke:#1976D2
-    style E fill:#2196F3,stroke:#1976D2
-    style F fill:#2196F3,stroke:#1976D2
-    style G fill:#2196F3,stroke:#1976D2
+    style E fill:#9C27B0,stroke:#7B1FA2
+    style F fill:#FF5722,stroke:#E64A19
