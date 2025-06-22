@@ -10,7 +10,7 @@
 | Модуль                          | Технологии                     | Назначение                                                                 |
 |---------------------------------|--------------------------------|----------------------------------------------------------------------------|
 | **[filex-bot-dispatcher](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-dispatcher)** | Spring Boot, Telegram API      | Приём сообщений, первичная валидация, взаимодействие с RabbitMQ            |
-| **[filex-bot-file-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-file-service)** | Spring Boot, MongoDB           | Управление файловыми операциями (загрузка, хранение, обработка)           |
+| **[filex-bot-file-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-file-service)** | Spring Boot           | Управление файловыми операциями (загрузка, хранение, обработка)           |
 | **[filex-bot-user-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-user-service)** | Spring Boot, Spring Data JPA   | Управление пользователями и аутентификацией                               |
 | **[filex-bot-registration-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-registration-service)** | Spring Boot, REST              | Обработка регистрации, подтверждение через email                          |
 | **[filex-bot-email-service](https://github.com/DmitriyShemyakin/FileXBot/tree/main/filex-bot-email-service)** | Spring Boot, JavaMailSender    | Асинхронная отправка email-уведомлений                                    |
@@ -46,7 +46,7 @@ graph TD
     C --> E[filex-bot-user-service]
     C --> F[filex-bot-registration-service]
     F --> G[filex-bot-email-service]
-    D --> H[(MongoDB)]
+    D --> H[(PostgreSQL)]
     E --> I[(PostgreSQL)]
     G --> J[SMTP Server]
     
